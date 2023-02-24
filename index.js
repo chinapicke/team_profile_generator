@@ -76,4 +76,65 @@ const initManager = () => {
             },
         ])
         .then(answers)
-    }
+}
+
+const initEngineer = () => {
+    // formatting from https://www.npmjs.com/package/inquirer
+    inquirer
+        .prompt([
+            /* Pass your questions in here */
+            {
+                type: 'input',
+                message: "What is the engineer's name?",
+                name: 'engineername',
+                validate: engineerName => {
+                    if (engineerName) {
+                        return true;
+                    } else {
+                        console.log('Please provide a name');
+                        return false;
+                    }
+                }
+            },
+            {
+                type: 'input',
+                message: "What is the engineer ID number?",
+                name: 'engineerid',
+                validate: engineerId => {
+                    if (engineerId) {
+                        return true;
+                    } else {
+                        console.log('Please provide a ID number');
+                        return false;
+                    }
+                }
+            },
+            {
+                type: 'input',
+                message: "What is the engineer's email?",
+                name: 'engineeremail',
+                validate: engineerEmail => {
+                    if (engineerEmail) {
+                        return true;
+                    } else {
+                        console.log('Please provide a email address');
+                        return false;
+                    }
+                }
+            },
+            {
+                type: 'input',
+                message: "What is the Github username?",
+                name: 'github',
+                validate: githubUsername => {
+                    if (githubUsername) {
+                        return true;
+                    } else {
+                        console.log('Please provide a Github username');
+                        return false;
+                    }
+                }
+            },
+        ])
+        .then(answers)
+}
