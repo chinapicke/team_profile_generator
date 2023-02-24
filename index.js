@@ -17,3 +17,63 @@ const render = require("./src/page-template.js");
 const team = []
 // TODO: Write Code to gather information about the development team members, and render the HTML file.
 
+const initManager = () => {
+    // formatting from https://www.npmjs.com/package/inquirer
+    inquirer
+        .prompt([
+            /* Pass your questions in here */
+            {
+                type: 'input',
+                message: "What is the team's manager name?",
+                name: 'managername',
+                validate: managerName => {
+                    if (managerName) {
+                        return true;
+                    } else {
+                        console.log('Please provide a name');
+                        return false;
+                    }
+                }
+            },
+            {
+                type: 'input',
+                message: "What is the employee ID number?",
+                name: 'managerid',
+                validate: managerId => {
+                    if (managerId) {
+                        return true;
+                    } else {
+                        console.log('Please provide a ID number');
+                        return false;
+                    }
+                }
+            },
+            {
+                type: 'input',
+                message: "What is the team's manager email?",
+                name: 'manageremail',
+                validate: managerEmail => {
+                    if (managerEmail) {
+                        return true;
+                    } else {
+                        console.log('Please provide a emial address');
+                        return false;
+                    }
+                }
+            },
+            {
+                type: 'input',
+                message: "What is the office number?",
+                name: 'officenumber',
+                validate: officeNumber => {
+                    if (officeNumber) {
+                        return true;
+                    } else {
+                        console.log('Please provide a valid phone number');
+                        return false;
+                    }
+                }
+            },
+        ])
+        .then(answers)
+    }
