@@ -16,18 +16,18 @@ const render = require("./src/page-template.js");
 // empty array to push to with the answers from manager, intern and engineer
 const team = []
 // TODO: Write Code to gather information about the development team members, and render the HTML file.
-const furtherQuestions = () =>{
+const furtherQuestions = () => {
     inquirer
-    .prompt (
-        // List option for the user to select
-        {
-            type: 'list',
-            message: 'What would you like to do next?',
-            name: 'next',
-            choices: ['Add an Engineer','Add an Intern','Finish building the team']
-        }
-    )
-    .then(input)
+        .prompt(
+            // List option for the user to select
+            {
+                type: 'list',
+                message: 'What would you like to do next?',
+                name: 'next',
+                choices: ['Add an Engineer', 'Add an Intern', 'Finish building the team']
+            }
+        )
+        .then(input)
 }
 const initManager = () => {
     // formatting from https://www.npmjs.com/package/inquirer
@@ -88,7 +88,7 @@ const initManager = () => {
             },
         ])
         .then(answers => {
-            const manager = new Manager (manager.managername, manager.managerid, manager.manageremail, manager.officeNumber)
+            const manager = new Manager(manager.managername, manager.managerid, manager.manageremail, manager.officeNumber)
             team.push(manager)
             furtherQuestions()
         })
@@ -154,7 +154,7 @@ const initEngineer = () => {
         ])
         .then(answers => {
             // creates a new engineer object with the answers from the user
-            const engineer =  new Engineer (engineer.engineername, engineer.engineerid, engineer.email,engineer.github)
+            const engineer = new Engineer(engineer.engineername, engineer.engineerid, engineer.email, engineer.github)
             // push the new object into the team array so that it can be shown on the html page
             team.push(engineer)
             // furtherQuestion function to display the questions to direct user to the thing that they picked to make the team
@@ -221,8 +221,19 @@ const initIntern = () => {
             },
         ])
         .then(answers => {
-            const intern = new Intern (intern.internname, intern.internid, intern.internemail,intern.school)
+            const intern = new Intern(intern.internname, intern.internid, intern.internemail, intern.school)
             team.push(intern)
             furtherQuestions()
         })
-    }
+}
+
+// Write the file using the provided page template  
+// Used same err if/else statement as in my previous challenge 
+function writePage() {
+    fs.writeFile(outputPath, render(team), (err) => {
+        // if error is true console error, if false console log success
+        err ? console.log(err) : console.log('You have successfully made your team')
+    })
+}
+
+
