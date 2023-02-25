@@ -75,7 +75,11 @@ const initManager = () => {
                 }
             },
         ])
-        .then(answers)
+        .then(answers => {
+            const manager = new Manager (manager.managername, manager.managerid, manager.manageremail, manager.officeNumber)
+            team.push(manager)
+            // insert function that renders out the remaining questions to pick what to add to the team
+        })
 }
 
 const initEngineer = () => {
@@ -138,3 +142,64 @@ const initEngineer = () => {
         ])
         .then(answers)
 }
+
+const initIntern = () => {
+    // formatting from https://www.npmjs.com/package/inquirer
+    inquirer
+        .prompt([
+            /* Pass your questions in here */
+            {
+                type: 'input',
+                message: "What is the intern's name?",
+                name: 'internname',
+                validate: internName => {
+                    if (internName) {
+                        return true;
+                    } else {
+                        console.log('Please provide a name');
+                        return false;
+                    }
+                }
+            },
+            {
+                type: 'input',
+                message: "What is the intern's ID number?",
+                name: 'internid',
+                validate: internId => {
+                    if (internId) {
+                        return true;
+                    } else {
+                        console.log('Please provide a ID number');
+                        return false;
+                    }
+                }
+            },
+            {
+                type: 'input',
+                message: "What is the intern's email?",
+                name: 'internemail',
+                validate: internEmail => {
+                    if (internEmail) {
+                        return true;
+                    } else {
+                        console.log('Please provide a email address');
+                        return false;
+                    }
+                }
+            },
+            {
+                type: 'input',
+                message: "What is the name of the intern's school?",
+                name: 'school',
+                validate: internSchool => {
+                    if (internSchool) {
+                        return true;
+                    } else {
+                        console.log("Please provide a school's name");
+                        return false;
+                    }
+                }
+            },
+        ])
+        .then(answers)
+    }
