@@ -16,7 +16,18 @@ const render = require("./src/page-template.js");
 // empty array to push to with the answers from manager, intern and engineer
 const team = []
 // TODO: Write Code to gather information about the development team members, and render the HTML file.
-
+const furtherQuestions = () =>{
+    inquirer
+    .prompt (
+        {
+            type: 'list',
+            message: 'What would you like to do next?',
+            name: 'next',
+            choices: ['Add an Engineer','Add an Intern','Finish building the team']
+        }
+    )
+    .then(input)
+}
 const initManager = () => {
     // formatting from https://www.npmjs.com/package/inquirer
     inquirer
