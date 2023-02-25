@@ -19,6 +19,7 @@ const team = []
 const furtherQuestions = () =>{
     inquirer
     .prompt (
+        // List option for the user to select
         {
             type: 'list',
             message: 'What would you like to do next?',
@@ -89,7 +90,7 @@ const initManager = () => {
         .then(answers => {
             const manager = new Manager (manager.managername, manager.managerid, manager.manageremail, manager.officeNumber)
             team.push(manager)
-            // insert function that renders out the remaining questions to pick what to add to the team
+            furtherQuestions()
         })
 }
 
@@ -156,6 +157,8 @@ const initEngineer = () => {
             const engineer =  new Engineer (engineer.engineername, engineer.engineerid, engineer.email,engineer.github)
             // push the new object into the team array so that it can be shown on the html page
             team.push(engineer)
+            // furtherQuestion function to display the questions to direct user to the thing that they picked to make the team
+            furtherQuestions();
         })
 }
 
@@ -220,5 +223,6 @@ const initIntern = () => {
         .then(answers => {
             const intern = new Intern (intern.internname, intern.internid, intern.internemail,intern.school)
             team.push(intern)
+            furtherQuestions()
         })
     }
