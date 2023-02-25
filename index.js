@@ -27,7 +27,22 @@ const furtherQuestions = () => {
                 choices: ['Add an Engineer', 'Add an Intern', 'Finish building the team']
             }
         )
-        .then(input)
+        .then(function (input) {
+            // switch idea from https://stackoverflow.com/questions/74075310/how-to-properly-nest-inquirer-prompts
+            switch (input.next) {
+                // starts the function based on the option that has been selected
+                case 'Add an engineer':
+                    initEngineer()
+                    break;
+                case 'Add an intern':
+                    initIntern()
+                    break;
+                default:
+                    writePage()
+                    break;
+
+            }
+        })    
 }
 const initManager = () => {
     // formatting from https://www.npmjs.com/package/inquirer
@@ -235,5 +250,8 @@ function writePage() {
         err ? console.log(err) : console.log('You have successfully made your team')
     })
 }
+
+// calls the manager function which will run the rest of the code due to the order
+initManager()
 
 
