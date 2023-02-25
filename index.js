@@ -140,7 +140,12 @@ const initEngineer = () => {
                 }
             },
         ])
-        .then(answers)
+        .then(answers => {
+            // creates a new engineer object with the answers from the user
+            const engineer =  new Engineer (engineer.engineername, engineer.engineerid, engineer.email,engineer.github)
+            // push the new object into the team array so that it can be shown on the html page
+            team.push(engineer)
+        })
 }
 
 const initIntern = () => {
@@ -201,5 +206,8 @@ const initIntern = () => {
                 }
             },
         ])
-        .then(answers)
+        .then(answers => {
+            const intern = new Intern (intern.internname, intern.internid, intern.internemail,intern.school)
+            team.push(intern)
+        })
     }
