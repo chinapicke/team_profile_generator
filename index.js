@@ -18,32 +18,31 @@ const team = []
 // TODO: Write Code to gather information about the development team members, and render the HTML file.
 const furtherQuestions = () => {
     inquirer
-        .prompt(
-            // List option for the user to select
+        .prompt([
+            /* Pass your questions in here */
             {
                 type: 'list',
-                message: 'What would you like to do next?',
+                message: 'Select your next option?',
                 name: 'next',
-                choices: ['Add an Engineer', 'Add an Intern', 'Finish building the team']
+                choices: ['Add an engineer', 'Add an intern', 'Finish building the team']
             }
-        )
+        ])
         .then(function (input) {
-            // switch idea from https://stackoverflow.com/questions/74075310/how-to-properly-nest-inquirer-prompts
-            switch (input.next) {
-                // starts the function based on the option that has been selected
-                case 'Add an engineer':
-                    initEngineer()
-                    break;
-                case 'Add an intern':
-                    initIntern()
-                    break;
-                default:
-                    writePage()
-                    break;
+    // switch idea from https://stackoverflow.com/questions/74075310/how-to-properly-nest-inquirer-prompts
+    switch (input.next) {
+        case 'Add an engineer':
+            initEngineer()
+            break;
+        case 'Add an intern':
+            initIntern()
+            break;
+        default:
+            writePage()
+            break;
+    }
+        })
+};
 
-            }
-        })    
-}
 const initManager = () => {
     // formatting from https://www.npmjs.com/package/inquirer
     inquirer
@@ -103,11 +102,16 @@ const initManager = () => {
             },
         ])
         .then(answers => {
-            const manager = new Manager(manager.managername, manager.managerid, manager.manageremail, manager.officeNumber)
-            team.push(manager)
+            // makes a new manager variable using manager constructor with the answers from the questions
+            const manager = new Manager(answers.managername, answers.managerid, answers.manageremail, answers.officenumber);
+            // pushes manager to the team
+            team.push(manager);
+            console.log(manager);
+            console.log(furtherQuestions)
+            // calls the function that renders the next questions that the user needs to select from 
             furtherQuestions()
         })
-}
+};
 
 const initEngineer = () => {
     // formatting from https://www.npmjs.com/package/inquirer
@@ -168,14 +172,12 @@ const initEngineer = () => {
             },
         ])
         .then(answers => {
-            // creates a new engineer object with the answers from the user
-            const engineer = new Engineer(engineer.engineername, engineer.engineerid, engineer.email, engineer.github)
-            // push the new object into the team array so that it can be shown on the html page
-            team.push(engineer)
-            // furtherQuestion function to display the questions to direct user to the thing that they picked to make the team
-            furtherQuestions();
+            const engineer = new Engineer(answers.engineername, answers.engineerid, answers.engineeremail, answers.github)
+            team.push(engineer);
+            furtherQuestions()
         })
-}
+};
+
 
 const initIntern = () => {
     // formatting from https://www.npmjs.com/package/inquirer
@@ -236,14 +238,14 @@ const initIntern = () => {
             },
         ])
         .then(answers => {
-            const intern = new Intern(intern.internname, intern.internid, intern.internemail, intern.school)
-            team.push(intern)
+            const intern = new Intern(answers.internname, answers.internid, answers.internemail, answers.school);
+            team.push(intern);
             furtherQuestions()
         })
-}
+};
+
 
 // Write the file using the provided page template  
-// Used same err if/else statement as in my previous challenge 
 function writePage() {
     fs.writeFile(outputPath, render(team), (err) => {
         // if error is true console error, if false console log success
@@ -251,7 +253,9 @@ function writePage() {
     })
 }
 
-// calls the manager function which will run the rest of the code due to the order
 initManager()
+
+
+
 
 
