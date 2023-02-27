@@ -29,6 +29,7 @@ const furtherQuestions = () => {
         ])
         .then(function (input) {
     // switch idea from https://stackoverflow.com/questions/74075310/how-to-properly-nest-inquirer-prompts
+    // the input selected by the user will run the certain function and therefore the questions specific to that function
     switch (input.next) {
         case 'Add an engineer':
             initEngineer()
@@ -37,12 +38,14 @@ const furtherQuestions = () => {
             initIntern()
             break;
         default:
+            // aka when finish building the team is selected then it creates and writes the input onto the team.file
             writePage()
             break;
     }
         })
 };
 
+// created function to render manager questions
 const initManager = () => {
     // formatting from https://www.npmjs.com/package/inquirer
     inquirer
@@ -106,8 +109,9 @@ const initManager = () => {
             const manager = new Manager(answers.managername, answers.managerid, answers.manageremail, answers.officenumber);
             // pushes manager to the team
             team.push(manager);
-            console.log(manager);
-            console.log(furtherQuestions)
+            // console.log to check it is showing the users answers to the questions
+            // console.log(manager);
+            // console.log(furtherQuestions)
             // calls the function that renders the next questions that the user needs to select from 
             furtherQuestions()
         })
@@ -172,7 +176,9 @@ const initEngineer = () => {
             },
         ])
         .then(answers => {
+            // makes a new engineer variable using engineer constructor with the answers from the questions
             const engineer = new Engineer(answers.engineername, answers.engineerid, answers.engineeremail, answers.github)
+            // pushes engineer to the team
             team.push(engineer);
             furtherQuestions()
         })
@@ -246,13 +252,17 @@ const initIntern = () => {
 
 
 // Write the file using the provided page template  
+// Used the same template to write file and condition as I used in the last challenge
 function writePage() {
+    // writes the file to the path provided to output, renders the team array which was pushed into by the other functions
     fs.writeFile(outputPath, render(team), (err) => {
         // if error is true console error, if false console log success
         err ? console.log(err) : console.log('You have successfully made your team')
     })
 }
 
+// initials initManager only as the questions after this function is decided by the users input
+// if all functions were called then the questions would all be running at the same time, which is not what we want
 initManager()
 
 
